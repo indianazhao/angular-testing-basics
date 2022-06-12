@@ -10,11 +10,40 @@ import { Llama } from './llama.model';
 export class FrontComponent implements OnInit {
 
   llamas!: Llama[];
+  isAsyncDone = false;
 
   constructor(private frontService: FrontService) { }
 
   ngOnInit(): void {
-    this.llamas = this.frontService.getFeaturedLlamas();
+    this.frontService.getFeaturedLlamas().then(result => {
+      this.llamas = result;
+    });
+  }
+
+  // async(): Promise<void> {
+  //   return Promise.resolve().then(() => {
+  //     this.isAsyncDone = true;
+  //   });
+  // }
+
+  // async(): Promise<void> {
+  //   return Promise.resolve().then(() => {
+  //     return  new Promise((resolve) => {
+  //       setTimeout(() => {
+  //         this.isAsyncDone = true;
+  //         resolve();
+  //       }, 4000);
+  //     });
+  //   });
+  // }
+
+  async(): Promise<void> {
+    setTimeout(() => {
+      console.log('test');
+    }, 0);
+    return Promise.resolve().then(() => {
+      this.isAsyncDone = true;
+    });
   }
 
   isListVisible(): boolean {

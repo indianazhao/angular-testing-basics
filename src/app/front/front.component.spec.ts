@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { FrontComponent } from './front.component';
 import { FrontService } from './front.service';
@@ -26,14 +26,32 @@ describe('FrontComponent', () => {
 
   describe('INIT', () => {
     Given(() => {
-      frontServiceSpy.getFeaturedLlamas.and.returnValue([{ name: 'indi', imageFileName: 'fakeImage' }]);
-    });
-    When(() => {
-      actualValue = componentUnderTest.ngOnInit();
+      frontServiceSpy.getFeaturedLlamas.and.returnValue(
+        Promise.resolve([{ name: 'indi', imageFileName: 'fakeImage' }])
+      );
     });
 
+    When(fakeAsync(() => {
+      componentUnderTest.ngOnInit();
+      tick();
+    }));
+
     Then(() => {
+      console.log('componentUnderTest.llamas', componentUnderTest.llamas);
       expect(componentUnderTest.llamas.length).toBeGreaterThan(0);
+      expect(frontServiceSpy.getFeaturedLlamas).toHaveBeenCalled();
+    });
+  });
+
+  describe('Async', () => {
+
+    When(fakeAsync(() => {
+      componentUnderTest.async();
+      tick();
+    }));
+
+    Then(() => {
+      expect(componentUnderTest.isAsyncDone).toBe(true);
     });
   });
 
