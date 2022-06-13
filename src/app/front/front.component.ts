@@ -9,7 +9,7 @@ import { Llama } from './llama.model';
 })
 export class FrontComponent implements OnInit {
 
-  llamas!: Llama[];
+  llamas: Llama[] | undefined;
   isAsyncDone = false;
 
   constructor(private frontService: FrontService) { }
@@ -47,6 +47,6 @@ export class FrontComponent implements OnInit {
   }
 
   isListVisible(): boolean {
-    return (this.llamas.length > 0);
+    return this.llamas && this.llamas.length > 0 ? true : false;
   }
 }

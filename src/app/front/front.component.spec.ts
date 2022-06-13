@@ -38,7 +38,7 @@ describe('FrontComponent', () => {
 
     Then(() => {
       console.log('componentUnderTest.llamas', componentUnderTest.llamas);
-      expect(componentUnderTest.llamas.length).toBeGreaterThan(0);
+      expect(componentUnderTest.llamas?.length).toBeGreaterThan(0);
       expect(frontServiceSpy.getFeaturedLlamas).toHaveBeenCalled();
     });
   });

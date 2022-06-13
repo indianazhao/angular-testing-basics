@@ -29,7 +29,11 @@ describe('FrontService', () => {
 
     Given(() => {
       fakeLlamas = [{name: 'fake name', imageFileName: 'fake image'}];
-      anotherServiceSpy.getLlamasFromService.and.nextWith(fakeLlamas);
+
+      // 下面兩行可以用 nextOneTimeWith 取代
+      // anotherServiceSpy.getLlamasFromService.and.nextWith(fakeLlamas);
+      // anotherServiceSpy.getLlamasFromService.and.complete();
+      anotherServiceSpy.getLlamasFromService.and.nextOneTimeWith(fakeLlamas);
     });
 
     When(fakeAsync(() => {

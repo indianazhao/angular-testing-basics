@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { AnotherService } from './another.service';
 import { Llama } from './llama.model';
 @Injectable({
@@ -7,12 +8,10 @@ import { Llama } from './llama.model';
 export class FrontService {
   constructor(private anotherService: AnotherService) {}
 
-  getFeaturedLlamas(): Promise<Llama[]> {
-    return new Promise((resolve, reject) => {
-      this.anotherService.getLlamasFromService().subscribe({
-        next: (value) => resolve(value),
-        error: (error) => reject(error),
-      });
-    });
+  getFeaturedLlamas(): Promise<Llama[] | undefined> {
+
+    // toPromise 已經是 deprecated (https://rxjs.dev/deprecations/to-promise)
+    // return this.anotherService.getLlamasFromService().toPromise();
+    return firstValueFrom(this.anotherService.getLlamasFromService());
   }
 }
