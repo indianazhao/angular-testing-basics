@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Llama } from './llama.model';
 
@@ -6,14 +7,15 @@ import { Llama } from './llama.model';
   providedIn: 'root'
 })
 export class AnotherService {
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getLlamasFromService(): Observable<Llama[]> {
-    return of([{
-      name: 'Mike', imageFileName: '1.jpg',
-    }, {
-      name: 'Jean', imageFileName: '2.jpg',
-    }]);
+    return this.http.get<Llama[]>('api/getLlamas');
+    // return of([{
+    //   name: 'Mike', imageFileName: '1.jpg',
+    // }, {
+    //   name: 'Jean', imageFileName: '2.jpg',
+    // }]);
   }
 
 }
