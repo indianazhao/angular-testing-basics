@@ -1,3 +1,4 @@
+import { RouterAdapterService } from './../_service/router-adapter/router-adapter.service';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { FrontComponent } from './front.component';
@@ -8,6 +9,7 @@ describe('FrontComponent', () => {
   let componentUnderTest: FrontComponent;
   let actualValue: any;
   let frontServiceSpy: Spy<FrontService>;
+  let routerSpy: Spy<RouterAdapterService>;
 
   Given(() => {
     TestBed.configureTestingModule({
@@ -16,12 +18,17 @@ describe('FrontComponent', () => {
         {
           provide: FrontService,
           useValue: createSpyFromClass(FrontService)
+        },
+        {
+          provide: RouterAdapterService,
+          useValue: createSpyFromClass(RouterAdapterService)
         }
       ]
     });
 
     componentUnderTest = TestBed.inject(FrontComponent);
     frontServiceSpy = TestBed.inject(FrontService) as Spy<FrontService>;
+    routerSpy = TestBed.inject(RouterAdapterService) as Spy<RouterAdapterService>;
   });
 
   describe('INIT', () => {
@@ -76,6 +83,21 @@ describe('FrontComponent', () => {
       Then(() => {
         expect(actualValue).toEqual(false);
       });
+    });
+  });
+
+  describe('METHOD: goToLlamaPage', () => {
+    let fakeLlamaId: string;
+    Given(() => {
+      fakeLlamaId = 'Fake Id';
+    });
+
+    When(() => {
+      componentUnderTest.goToLlamaPage(fakeLlamaId);
+    });
+
+    Then(() => {
+      expect(routerSpy.goToUrl).toHaveBeenCalledWith(`/llama/${fakeLlamaId}`);
     });
   });
 });
