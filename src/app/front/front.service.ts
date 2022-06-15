@@ -8,7 +8,7 @@ import { Llama } from './llama.model';
 export class FrontService {
   constructor(private anotherService: AnotherService) {}
 
-  getFeaturedLlamas(): Promise<Llama[] | undefined> {
+  getFeaturedLlamas(config?: any): Promise<Llama[] | undefined> {
 
     // toPromise 已經是 deprecated (https://rxjs.dev/deprecations/to-promise)
     // return this.anotherService.getLlamasFromService().toPromise();

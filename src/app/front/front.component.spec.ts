@@ -33,8 +33,8 @@ describe('FrontComponent', () => {
 
   describe('INIT', () => {
     Given(() => {
-      frontServiceSpy.getFeaturedLlamas.and.returnValue(
-        Promise.resolve([{ name: 'indi', imageFileName: 'fakeImage' }])
+      frontServiceSpy.getFeaturedLlamas.mustBeCalledWith({ newest: true }).resolveWith(
+        [{ name: 'indi', imageFileName: 'fakeImage' }]
       );
     });
 
@@ -46,7 +46,7 @@ describe('FrontComponent', () => {
     Then(() => {
       console.log('componentUnderTest.llamas', componentUnderTest.llamas);
       expect(componentUnderTest.llamas?.length).toBeGreaterThan(0);
-      expect(frontServiceSpy.getFeaturedLlamas).toHaveBeenCalled();
+      // expect(frontServiceSpy.getFeaturedLlamas).toHaveBeenCalledWith({newest: true});
     });
   });
 

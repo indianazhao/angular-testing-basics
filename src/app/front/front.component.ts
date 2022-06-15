@@ -19,7 +19,7 @@ export class FrontComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.frontService.getFeaturedLlamas().then(result => {
+    this.frontService.getFeaturedLlamas({newest: true}).then(result => {
       this.llamas = result;
     });
   }
