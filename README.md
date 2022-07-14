@@ -1,4 +1,4 @@
-# AngularTestIndiana
+# Angular Class Testing In Action
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.4.
 
